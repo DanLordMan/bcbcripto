@@ -6,15 +6,16 @@ const Navigation = ({ account }) => {
     return (
         <Navbar expand="lg" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="https://blockstellart.com">
-                    &nbsp; DApp
+                <Navbar.Brand href="">
+                    &nbsp; BCB
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbar navbar-dark bg-primary" />
                 <Navbar.Collapse id="navbar navbar-dark bg-primary">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/">Tokens</Nav.Link>
-                        <Nav.Link as={Link} to="/loteria">Loteria</Nav.Link>
-                        <Nav.Link as={Link} to="/ganador">Ganador</Nav.Link>
+
+                        <Nav.Link as={Link} to="/usuario">Usuarios</Nav.Link>
+                        <Nav.Link as={Link} to="/transferencia">Transferencia</Nav.Link>
+
                     </Nav>
                     <Nav>
                         <Nav.Link
