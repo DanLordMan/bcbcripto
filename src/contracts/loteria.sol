@@ -25,7 +25,8 @@ contract loteria is ERC20, Ownable {
 
     // Registro del usuario
     mapping(address => address) public usuario_contract;
-    mapping(address => string) public alias;  
+    // Mapeo para almacenar alias de usuario
+    mapping(address => string) public userAlias;
 
     // Precio de los tokens ERC-20
     function precioTokens(uint256 _numTokens) internal pure returns (uint256){
@@ -52,33 +53,26 @@ contract loteria is ERC20, Ownable {
         _mint(address(this), _cantidad);
     }
 
-    // Registro de usuarios
+    // Registro de usuarios con alias
     function registrar(string memory _alias) internal {
         address addr_personal_contract = address(new boletosNFTs(msg.sender, address(this), nft));
-        usuario_contract[msg.sender] = addr_personal_contract;
-        _alias[msg.sender] = _alias; 
+        usuario_contract[msg.sender] = addr_personal_contract; 
+        userAlias[msg.sender] = _alias; // Asigna el alias al usuario
     }
-
-    // Función para registrar un usuario con un alias
-    function registrar(string memory _alias) internal {
-    // Crear un nuevo contrato para el usuario
-    address addr_personal_contract = address(new boletosNFTs(msg.sender, address(this), nft));  
-    // Registrar el contrato asociado al usuario
-    usuario_contract[msg.sender] = addr_personal_contract;
-    // Registrar el alias del usuario
-    alias[msg.sender] = _alias;
-}
-
 
     // Informacion de un usuario
     function usersInfo(address _account) public view returns (address){
-
         return usuario_contract[_account];
     }
 
+    // Obtener el alias de un usuario
+    function getAlias(address _account) public view returns (string memory) {
+        return userAlias[_account];
+    }
+
     // Compra de tokens ERC-20
-    function compraTokens(uint256 _numTokens) public payable {
-        // Registro del ususario
+    function compraTokens(uint256 _numTokens, string memory _alias) public payable {
+        // Registro del usuario con alias
         if(usuario_contract[msg.sender] == address(0)){
             registrar(_alias);
         }
@@ -121,7 +115,7 @@ contract loteria is ERC20, Ownable {
     mapping(uint => address) ADNBoleto;
     // Numero aleatorio
     uint randNonce = 0;
-    // Boletos de la loteria generadors
+    // Boletos de la loteria generados
     uint [] boletosComprados;
 
     // Compra de boletos de loteria
